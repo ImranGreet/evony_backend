@@ -44,6 +44,36 @@ class BlogController extends Controller
        }
    }
 
+
+   
+   public function updateBlog(Request $request,$id){
+
+    $request->validate([
+        'blog_title' => ['required', 'string', 'max:255'],
+        'blog_thumbnail' => [ 'max:255'],
+        'blog_description' => ['required', 'string'],
+    ]);
+
+    $blog =  Blog::find($id);
+
+    if ($request->blog_thumbnail != null) {
+        $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $request->blog_thumbnail->extension();
+        $request->blog_thumbnail->move(storage_path('app/public/image'), $fileName);
+        $blog->blog_thumbnail = $fileName;
+    }
+
+    $blog->blog_title = $request->slider_title;
+   
+    $blog->blog_description = $request->slider_description;
+
+    $blog->save();
+
+    
+    return response()->json([
+        "message" => "Slider is updated Successfully!"
+    ]);
+}
+
    public function deleteBlog(Request $request, $id){
     /*delete category by Id*/
      Blog::find($id)->delete();
