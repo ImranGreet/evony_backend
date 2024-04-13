@@ -6,43 +6,34 @@ use App\Http\Controllers\Admin\SliderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
-Route::controller(HomeImageController::class)->prefix('admin')->group(function(){
-    Route::get('/home_images_store','homeImageStore');
-    Route::post('/create_homeimage','createHomeImage');
-    Route::get('/editHomeImage','editHomeImage');
-    Route::put('/updateHomeImage','updateHomeImage');
-    Route::delete('/deleteHomeImage','deleteHomeImage');
+Route::controller(HomeImageController::class)->prefix('admin')->group(function () {
+    Route::get('/home_images_store', 'homeImageStore');
+    Route::post('/create_homeimage', 'createHomeImage');
+    Route::get('/editHomeImage', 'editHomeImage');
+    Route::put('/updateHomeImage', 'updateHomeImage');
+    Route::delete('/deleteHomeImage', 'deleteHomeImage');
 });
 
 
-Route::controller(SliderController::class)->prefix('admin')->group(function(){
-    Route::post('/create_Slider','createSlider');
-    Route::get('/editSlider','editSlider');
-    Route::put('/updateSlider','updateSlider');
-    Route::delete('/deleteSlider','deleteSlider');
+Route::controller(SliderController::class)->prefix('admin')->group(function () {
+    Route::post('/create_Slider', 'createSlider');
+    Route::get('/editSlider', 'editSlider');
+    Route::put('/updateSlider', 'updateSlider');
+    Route::delete('/deleteSlider', 'deleteSlider');
 });
 
 
 
-Route::controller(BlogController::class)->prefix('admin')->group(function(){
-    Route::post('/create_Blog','createBlog');
-    Route::get('/editBlog','editBlog');
-    Route::put('/updateBlog','updateBlog');
-    Route::delete('/deleteBlog','deleteBlog');
+Route::controller(BlogController::class)->prefix('admin')->group(function () {
+    Route::post('/create_Blog', 'createBlog');
+    Route::get('/editBlog', 'editBlog');
+    Route::put('/updateBlog', 'updateBlog');
+    Route::delete('/deleteBlog', 'deleteBlog');
 });
