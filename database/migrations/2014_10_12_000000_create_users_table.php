@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        /**/
+        /* used for delete*/
         Schema::dropIfExists('users');
     }
 };
