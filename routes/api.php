@@ -37,3 +37,5 @@ Route::controller(BlogController::class)->prefix('admin')->group(function () {
     Route::put('/updateBlog', 'updateBlog');
     Route::delete('/deleteBlog', 'deleteBlog');
 });
+
+
