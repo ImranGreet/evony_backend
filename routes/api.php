@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\HomeImageController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,3 +40,4 @@ Route::controller(BlogController::class)->prefix('admin')->group(function () {
 });
 
 
+Route::apiResource('user', UserController::class);
