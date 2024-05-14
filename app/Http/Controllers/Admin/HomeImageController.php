@@ -10,17 +10,26 @@ class HomeImageController extends Controller
 {
 
     public function homeImageStore(){
-        $homeImages = HomeImage::all();
 
-        return response()->json([
-            "homeImages" => $homeImages
-        ]);
-        
+        $homeImages = HomeImage::all();
+         if ($homeImages){
+             return response()->json([
+                 "message"=>"Home images are found",
+                 "homeImages" => $homeImages
+             ]);
+         }else{
+             return response()->json([
+                 "message"=>"Home images are not found",
+                 
+             ]);
+         }
+
+
     }
 
     public function createHomeImage(Request $request)
     {
-       
+
 
         $request->validate([
             'homeimage_title' => ['string', 'max:255'],

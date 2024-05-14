@@ -40,4 +40,4 @@ Route::controller(BlogController::class)->prefix('admin')->group(function () {
 });
 
 
-Route::apiResource('user', UserController::class);
+ Route::apiResource('user', UserController::class);
