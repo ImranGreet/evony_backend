@@ -80,7 +80,8 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User created successfully',
-            'password' => $randomNumber
+            'password' => $randomNumber,
+            'user' => $user,
         ], 201);
 
 
