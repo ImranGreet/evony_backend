@@ -44,8 +44,12 @@ Route::controller(BlogController::class)->prefix('admin')->group(function () {
 
 Route::apiResource('user', UserController::class);
 
-Route:: get('questions', QusetionController::class . 'index');
-Route:: post('questions', QusetionController::class . 'store');
+
+
+Route::controller(QusetionController::class)->group(function(){
+    Route:: get('questions', 'index');
+    Route:: post('questions','store');
+});
 
 Route::controller(StripePaymentController::class)->group(function(){
     Route::get('stripe', 'stripe');
