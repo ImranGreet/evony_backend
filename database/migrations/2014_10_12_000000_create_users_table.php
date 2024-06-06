@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('streetAddressTwo')->nullable();
             $table->string('city')->nullable();
             $table->string('town')->nullable();
-            $table->string('zipCode');
+            $table->string('zipCode')->nullable();;
             $table->string('dateOfBirth')->nullable();
             $table->string('placeOfBirth')->nullable();
             $table->string('gender');
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('idCardPhoto')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            
+
         });
     }
 
