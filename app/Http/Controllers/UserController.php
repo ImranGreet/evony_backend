@@ -42,7 +42,7 @@ class UserController extends Controller
             'lastName' => 'required',
             'email' => 'required',
             'phoneNumber' => 'required',
-            'zipCode' => 'required',
+            'zipCode' => '',
             'gender' => 'required',
         ]);
 
