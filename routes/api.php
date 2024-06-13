@@ -38,7 +38,7 @@ Route::controller(BlogController::class)->prefix('admin')->group(function () {
     Route::post('/create_Blog', 'createBlog');
     Route::get('/editBlog', 'editBlog');
     Route::put('/updateBlog', 'updateBlog');
-    Route::delete('/deleteBlog', 'deleteBlog');
+    Route::delete('/deleteBlog/{id}', 'deleteBlog')->where('id', '[0-9]+');;
     Route::get('/get_blogs', 'getBlogs') ;
 });
 
