@@ -16,7 +16,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 
-Route::controller(HomeImageController::class)->prefix('admin')->group(function () {
+Route::middleware(['auth:sanctum'])->controller(HomeImageController::class)->prefix('admin')->group(function () {
     Route::get('/home_images_store', 'homeImageStore');
     Route::post('/create_homeimage', 'createHomeImage');
     Route::get('/editHomeImage', 'editHomeImage');
@@ -25,7 +25,8 @@ Route::controller(HomeImageController::class)->prefix('admin')->group(function (
 });
 
 
-Route::controller(SliderController::class)->prefix('admin')->group(function () {
+// Slider routes with authentication
+Route::middleware(['auth:sanctum'])->prefix('admin')->controller(SliderController::class)->group(function () {
     Route::post('/create_Slider', 'createSlider');
     Route::get('/editSlider', 'editSlider');
     Route::put('/updateSlider', 'updateSlider');
@@ -34,12 +35,14 @@ Route::controller(SliderController::class)->prefix('admin')->group(function () {
 
 
 
-Route::controller(BlogController::class)->prefix('admin')->group(function () {
+
+
+Route::middleware(['auth:sanctum'])->prefix('admin')->controller(BlogController::class)->group(function () {
     Route::post('/create_Blog', 'createBlog');
     Route::get('/editBlog', 'editBlog');
     Route::put('/updateBlog', 'updateBlog');
-    Route::delete('/deleteBlog/{id}', 'deleteBlog')->where('id', '[0-9]+');;
-    Route::get('/get_blogs', 'getBlogs') ;
+    Route::delete('/deleteBlog/{id}', 'deleteBlog')->where('id', '[0-9]+');
+    Route::get('/get_blogs', 'getBlogs');
 });
 
 
