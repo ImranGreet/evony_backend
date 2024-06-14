@@ -50,12 +50,12 @@ Route::apiResource('user', UserController::class);
 
 
 
-Route::controller(QusetionController::class)->group(function(){
-    Route:: get('questions', 'index');
-    Route:: post('questions','store');
+Route::controller(QusetionController::class)->group(function () {
+    Route::get('questions', 'index');
+    Route::post('questions', 'store');
 });
 
-Route::controller(StripePaymentController::class)->group(function(){
+Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe');
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
