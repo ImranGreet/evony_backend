@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\HomeImageController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\client\HomePageController;
 use App\Http\Controllers\QusetionController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\UserController;
@@ -58,4 +59,11 @@ Route::controller(QusetionController::class)->group(function () {
 Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe');
     Route::post('stripe', 'stripePost')->name('stripe.post');
+});
+
+
+Route::controller(HomePageController::class)->group(function () {
+    Route::get('/getHomeImages', 'getHomeImage');
+    Route::get('/getSiders', 'getSlides');
+    Route::get('/getBlogs', 'getBlogs');
 });
