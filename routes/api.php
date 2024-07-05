@@ -38,7 +38,7 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->controller(SliderControlle
 
 
 
-Route::middleware(['auth:sanctum'])->prefix('admin')->controller(BlogController::class)->group(function () {
+Route::prefix('admin')->controller(BlogController::class)->group(function () {
     Route::post('/create_Blog', 'createBlog');
     Route::get('/editBlog', 'editBlog');
     Route::put('/updateBlog', 'updateBlog');
