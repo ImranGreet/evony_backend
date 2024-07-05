@@ -34,10 +34,6 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->controller(SliderControlle
     Route::delete('/deleteSlider', 'deleteSlider');
 });
 
-
-
-
-
 Route::prefix('admin')->controller(BlogController::class)->group(function () {
     Route::post('/create_Blog', 'createBlog');
     Route::get('/editBlog', 'editBlog');
@@ -45,6 +41,8 @@ Route::prefix('admin')->controller(BlogController::class)->group(function () {
     Route::delete('/deleteBlog/{id}', 'deleteBlog')->where('id', '[0-9]+');
     Route::get('/get_blogs', 'getBlogs');
 });
+
+
 
 
 Route::apiResource('user', UserController::class);

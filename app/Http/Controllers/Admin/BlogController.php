@@ -33,6 +33,7 @@ class BlogController extends Controller
         $blog->save();
 
         return response()->json([
+            
             "message" => "Blog Created Successfully!"
         ]);
     }
