@@ -115,6 +115,22 @@ class BlogController extends Controller
         ]);
     }
 
+    public function getBlogById($id)
+    {
+        $blog = Blog::find($id);
+
+        if (!$blog) {
+            return response()->json([
+                "message" => "Blog Not Found!",
+            ], 404);
+        }
+
+        return response()->json([
+            "message" => "Blog Found Successfully!",
+            "blog" => $blog
+        ]);
+    }
+
     public function getBlogs()
     {
         $blogs = Blog::all();

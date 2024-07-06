@@ -27,11 +27,11 @@ Route::middleware(['auth:sanctum'])->controller(HomeImageController::class)->pre
 
 
 // Slider routes with authentication
-Route::middleware(['auth:sanctum'])->prefix('admin')->controller(SliderController::class)->group(function () {
+Route::prefix('admin')->controller(SliderController::class)->group(function () {
     Route::post('/create_Slider', 'createSlider');
     Route::get('/editSlider', 'editSlider');
     Route::put('/updateSlider', 'updateSlider');
-    Route::delete('/deleteSlider', 'deleteSlider');
+    Route::delete('/deleteSlider/{id}', 'deleteSlider')->where('id', '[0-9]+');
 });
 
 Route::prefix('admin')->controller(BlogController::class)->group(function () {
@@ -39,6 +39,7 @@ Route::prefix('admin')->controller(BlogController::class)->group(function () {
     Route::get('/editBlog', 'editBlog');
     Route::put('/updateBlog', 'updateBlog');
     Route::delete('/deleteBlog/{id}', 'deleteBlog')->where('id', '[0-9]+');
+    Route::get('/getblog/{id}', 'getBlogById')->where('id', '[0-9]+');
     Route::get('/get_blogs', 'getBlogs');
 });
 
