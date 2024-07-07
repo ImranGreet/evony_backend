@@ -30,7 +30,7 @@ Route::middleware(['auth:sanctum'])->controller(HomeImageController::class)->pre
 Route::prefix('admin')->controller(SliderController::class)->group(function () {
     Route::post('/create_Slider', 'createSlider');
     Route::get('/editSlider', 'editSlider');
-    Route::put('/updateSlider', 'updateSlider');
+    Route::put('/updateSlider/{id}', 'updateSlider')->where('id', '[0-9]+');
     Route::delete('/deleteSlider/{id}', 'deleteSlider')->where('id', '[0-9]+');
 });
 
