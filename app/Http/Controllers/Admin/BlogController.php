@@ -54,6 +54,44 @@ class BlogController extends Controller
         ]);
     }
 
+    public function editBlog(Request $request, $id){
+        /*Model*/
+       $blog = Blog::where("id",'=',$id)->first();
+
+       if($blog){
+         return response()->json([
+           "message" => "Blog Found Succesfully!",
+           "blog" => $blog
+       ]);
+       }else{
+           return response()->json([
+           "message" => "Blog Not Found!",
+       ]);
+       }
+   }
+
+
+
+   public function updateBlog(Request $request,$id){
+
+    $request->validate([
+        'blog_title' => ['required', 'string', 'max:255'],
+        'blog_description' => ['required'],
+    ]);
+
+    $blog =  Blog::find($id);
+
+    if ($request->blog_thumbnail != null) {
+        $image = $request->file('image');
+        $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $image->getClientOriginalExtension();
+        $path = Storage::putFileAs('image', $image , $fileName);
+        $blog->blog_thumbnail = $path;
+    }
+
+    $blog->blog_title = $request->slider_title;
+
+    $blog->blog_description = $request->slider_description;
+
     public function updateBlog(Request $request, $id)
     {
         $request->validate([
@@ -102,10 +140,17 @@ class BlogController extends Controller
             ], 404);
         }
 
+
+    return response()->json([
+        "message" => "Slider is updated Successfully!"
+    ]);
+}
+
         // Delete the image from storage if it exists
         if ($blog->blog_thumbnail) {
             Storage::delete('public/image/' . $blog->blog_thumbnail);
         }
+
 
         // Delete the blog entry from database
         $blog->delete();

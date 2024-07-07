@@ -54,6 +54,43 @@ class SliderController extends Controller
         }
     }
 
+    public function editSlider(Request $request, $id){
+        /*Model*/
+       $slider = Slider::where("id",'=',$id)->first();
+
+       if($slider){
+         return response()->json([
+           "message" => "Slider Found Succesfully!",
+           "blog" => $slider
+       ]);
+       }else{
+           return response()->json([
+           "message" => "Slider Not Found!",
+       ]);
+       }
+   }
+
+   public function updateSlider(Request $request,$id){
+
+    $request->validate([
+        'slider_title' => ['required', 'string', 'max:255'],
+        'slider_thumbnail' => [ 'max:255'],
+        'slider_description' => ['required', 'string'],
+    ]);
+
+    $slider =  Slider::find($id);
+
+    if ($request->slider_thumbnail != null) {
+        $image = $request->file('image');
+        $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $image->getClientOriginalExtension();
+        $path = Storage::putFileAs('image', $image , $fileName);
+        $slider->slider_thumbnail = $path;
+    }
+
+    $slider->slider_title = $request->slider_title;
+
+    $slider->slider_description = $request->slider_description;
+=======
     public function updateSlider(Request $request, $id)
     {
         $request->validate([
@@ -95,14 +132,22 @@ class SliderController extends Controller
     {
         $slider = Slider::find($id);
 
+
         if (!$slider) {
             return response()->json(["message" => "Slider Not Found!"], 404);
         }
+
+
+    return response()->json([
+        "message" => "Slider is created Successfully!"
+    ]);
+}
 
         // Delete the image from storage
         if ($slider->slider_thumbnail) {
             Storage::disk('public')->delete($slider->slider_thumbnail);
         }
+
 
         // Delete the database record
         $slider->delete();

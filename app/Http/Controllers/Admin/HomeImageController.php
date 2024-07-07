@@ -24,8 +24,15 @@ class HomeImageController extends Controller
             return response()->json([
                 "message" => "Home images are not found",
 
+
+        return response()->json([
+            "homeImages" => $homeImages
+        ]);
+
+=======
             ]);
         }
+
     }
 
 
@@ -34,6 +41,7 @@ class HomeImageController extends Controller
 
     public function createHomeImage(Request $request)
     {
+
         $request->validate([
             'homeimage_title' => ['required', 'string', 'max:255'],
             'homeimage_thumbnail' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
@@ -85,16 +93,27 @@ class HomeImageController extends Controller
     {
         $request->validate([
             'homeimage_title' => ['required', 'string', 'max:255'],
+
+            'homeimage_description' => ['required'],
+
             'homeimage_thumbnail' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'homeimage_description' => ['required', 'string'],
+
         ]);
 
         $homeImage = HomeImage::find($id);
+
+        if ($request->homeImage_thumbnail != null) {
+            $image = $request->file('image');
+            $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $image->getClientOriginalExtension();
+            $path = Storage::putFileAs('image', $image , $fileName);
+            $homeImage->homeImage_thumbnail = $path;
 
         if (!$homeImage) {
             return response()->json([
                 "message" => "HomeImage Not Found!"
             ], 404);
+
         }
 
         if ($request->hasFile('homeimage_thumbnail')) {
