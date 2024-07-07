@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -31,7 +32,7 @@ class BlogController extends Controller
     public function editBlog(Request $request, $id){
         /*Model*/
        $blog = Blog::where("id",'=',$id)->first();
-       
+
        if($blog){
          return response()->json([
            "message" => "Blog Found Succesfully!",
@@ -45,30 +46,30 @@ class BlogController extends Controller
    }
 
 
-   
+
    public function updateBlog(Request $request,$id){
 
     $request->validate([
         'blog_title' => ['required', 'string', 'max:255'],
-        'blog_thumbnail' => [ 'max:255'],
-        'blog_description' => ['required', 'string'],
+        'blog_description' => ['required'],
     ]);
 
     $blog =  Blog::find($id);
 
     if ($request->blog_thumbnail != null) {
-        $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $request->blog_thumbnail->extension();
-        $request->blog_thumbnail->move(storage_path('app/public/image'), $fileName);
-        $blog->blog_thumbnail = $fileName;
+        $image = $request->file('image');
+        $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $image->getClientOriginalExtension();
+        $path = Storage::putFileAs('image', $image , $fileName);
+        $blog->blog_thumbnail = $path;
     }
 
     $blog->blog_title = $request->slider_title;
-   
+
     $blog->blog_description = $request->slider_description;
 
     $blog->save();
 
-    
+
     return response()->json([
         "message" => "Slider is updated Successfully!"
     ]);

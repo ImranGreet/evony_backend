@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
@@ -31,7 +32,7 @@ class SliderController extends Controller
     public function editSlider(Request $request, $id){
         /*Model*/
        $slider = Slider::where("id",'=',$id)->first();
-       
+
        if($slider){
          return response()->json([
            "message" => "Slider Found Succesfully!",
@@ -55,18 +56,19 @@ class SliderController extends Controller
     $slider =  Slider::find($id);
 
     if ($request->slider_thumbnail != null) {
-        $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $request->slider_thumbnail->extension();
-        $request->slider_thumbnail->move(storage_path('app/public/image'), $fileName);
-        $slider->slider_thumbnail = $fileName;
+        $image = $request->file('image');
+        $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $image->getClientOriginalExtension();
+        $path = Storage::putFileAs('image', $image , $fileName);
+        $slider->slider_thumbnail = $path;
     }
 
     $slider->slider_title = $request->slider_title;
-   
+
     $slider->slider_description = $request->slider_description;
 
     $slider->save();
 
-    
+
     return response()->json([
         "message" => "Slider is created Successfully!"
     ]);

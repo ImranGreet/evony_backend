@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\HomeImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeImageController extends Controller
 {
@@ -15,12 +16,12 @@ class HomeImageController extends Controller
         return response()->json([
             "homeImages" => $homeImages
         ]);
-        
+
     }
 
     public function createHomeImage(Request $request)
     {
-       
+
 
         $request->validate([
             'homeimage_title' => ['string', 'max:255'],
@@ -63,16 +64,16 @@ class HomeImageController extends Controller
 
         $request->validate([
             'homeimage_title' => ['required', 'string', 'max:255'],
-            'homeimage_thumbnail' => ['max:255'],
-            'homeimage_description' => ['required', 'string'],
+            'homeimage_description' => ['required'],
         ]);
 
         $homeImage =  HomeImage::find($id);
 
         if ($request->homeImage_thumbnail != null) {
-            $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $request->homeImage_thumbnail->extension();
-            $request->homeImage_thumbnail->move(storage_path('app/public/image'), $fileName);
-            $homeImage->homeImage_thumbnail = $fileName;
+            $image = $request->file('image');
+            $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $image->getClientOriginalExtension();
+            $path = Storage::putFileAs('image', $image , $fileName);
+            $homeImage->homeImage_thumbnail = $path;
         }
 
         $homeImage->homeImage_title = $request->homeimage_title;
