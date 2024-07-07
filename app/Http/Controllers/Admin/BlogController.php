@@ -133,7 +133,7 @@ class BlogController extends Controller
 
     public function getBlogs()
     {
-        $blogs = Blog::take(3)->get();
+        $blogs = Blog::all();
         return response()->json([
             "blogs" => $blogs
         ]);

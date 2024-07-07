@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class HomePageController extends Controller
 {
     public function getBlogs(){
-        $blogs = Blog::all();
+        $blogs = Blog::take(3)->get();;
         return response()->json([
             "blogs" => $blogs
         ]);
