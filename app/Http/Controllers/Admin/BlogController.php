@@ -38,21 +38,7 @@ class BlogController extends Controller
         ]);
     }
 
-    public function editBlog(Request $request, $id)
-    {
-        $blog = Blog::find($id);
-
-        if (!$blog) {
-            return response()->json([
-                "message" => "Blog Not Found!",
-            ], 404);
-        }
-
-        return response()->json([
-            "message" => "Blog Found Successfully!",
-            "blog" => $blog
-        ]);
-    }
+    
 
     public function editBlog(Request $request, $id){
         /*Model*/
@@ -72,25 +58,7 @@ class BlogController extends Controller
 
 
 
-   public function updateBlog(Request $request,$id){
-
-    $request->validate([
-        'blog_title' => ['required', 'string', 'max:255'],
-        'blog_description' => ['required'],
-    ]);
-
-    $blog =  Blog::find($id);
-
-    if ($request->blog_thumbnail != null) {
-        $image = $request->file('image');
-        $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $image->getClientOriginalExtension();
-        $path = Storage::putFileAs('image', $image , $fileName);
-        $blog->blog_thumbnail = $path;
-    }
-
-    $blog->blog_title = $request->slider_title;
-
-    $blog->blog_description = $request->slider_description;
+ 
 
     public function updateBlog(Request $request, $id)
     {
@@ -141,11 +109,7 @@ class BlogController extends Controller
         }
 
 
-    return response()->json([
-        "message" => "Slider is updated Successfully!"
-    ]);
-}
-
+    
         // Delete the image from storage if it exists
         if ($blog->blog_thumbnail) {
             Storage::delete('public/image/' . $blog->blog_thumbnail);
