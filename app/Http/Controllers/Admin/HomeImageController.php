@@ -24,15 +24,8 @@ class HomeImageController extends Controller
             return response()->json([
                 "message" => "Home images are not found",
 
-
-        return response()->json([
-            "homeImages" => $homeImages
-        ]);
-
-=======
             ]);
         }
-
     }
 
 
@@ -106,38 +99,38 @@ class HomeImageController extends Controller
         if ($request->homeImage_thumbnail != null) {
             $image = $request->file('image');
             $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $image->getClientOriginalExtension();
-            $path = Storage::putFileAs('image', $image , $fileName);
+            $path = Storage::putFileAs('image', $image, $fileName);
             $homeImage->homeImage_thumbnail = $path;
 
-        if (!$homeImage) {
-            return response()->json([
-                "message" => "HomeImage Not Found!"
-            ], 404);
-
-        }
-
-        if ($request->hasFile('homeimage_thumbnail')) {
-            // Delete the old image from storage
-            if ($homeImage->homeimage_thumbnail) {
-                Storage::disk('public')->delete('image/' . $homeImage->homeimage_thumbnail);
+            if (!$homeImage) {
+                return response()->json([
+                    "message" => "HomeImage Not Found!"
+                ], 404);
             }
 
-            // Store the new image
-            $file = $request->file('homeimage_thumbnail');
-            $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $file->extension();
-            $file->move(storage_path('app/public/image'), $fileName);
-            $homeImage->homeimage_thumbnail = $fileName;
+            if ($request->hasFile('homeimage_thumbnail')) {
+                // Delete the old image from storage
+                if ($homeImage->homeimage_thumbnail) {
+                    Storage::disk('public')->delete('image/' . $homeImage->homeimage_thumbnail);
+                }
+
+                // Store the new image
+                $file = $request->file('homeimage_thumbnail');
+                $fileName = md5(mt_rand(10000, 99999) . time()) . '.' . $file->extension();
+                $file->move(storage_path('app/public/image'), $fileName);
+                $homeImage->homeimage_thumbnail = $fileName;
+            }
+
+            $homeImage->homeimage_title = $request->homeimage_title;
+            $homeImage->homeimage_description = $request->homeimage_description;
+
+            $homeImage->save();
+
+            return response()->json([
+                "message" => "HomeImage Updated Successfully!",
+                "homeimage" => $homeImage
+            ]);
         }
-
-        $homeImage->homeimage_title = $request->homeimage_title;
-        $homeImage->homeimage_description = $request->homeimage_description;
-
-        $homeImage->save();
-
-        return response()->json([
-            "message" => "HomeImage Updated Successfully!",
-            "homeimage" => $homeImage
-        ]);
     }
 
     public function deleteHomeImage(Request $request, $id)
