@@ -16,7 +16,6 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): Response
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
         return response()->noContent();
