@@ -78,7 +78,7 @@ class UserController extends Controller
             $user->save();
         }
 
-        Mail::to($request->email)->send(new SendUserLoginInformation($randomNumber, $request->email));
+        // Mail::to($request->email)->send(new SendUserLoginInformation($randomNumber, $request->email));
 
         return response()->json([
             'message' => 'User created successfully',

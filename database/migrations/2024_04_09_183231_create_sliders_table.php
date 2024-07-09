@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('slider_title');
             $table->string('slider_thumbnail');
             $table->string('slider_desc');
+            $table->tinyInteger('is_active')->default(0);
             $table->timestamps();
         });
     }

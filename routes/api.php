@@ -28,11 +28,14 @@ Route::prefix('admin')->controller(HomeImageController::class)->group(function (
 
 
 // Slider routes with authentication
+Route::get('/Sliders', [SliderController::class, 'FilterSliders']);
 Route::prefix('admin')->controller(SliderController::class)->group(function () {
+    Route::get('/getSliders', 'index');
     Route::post('/create_Slider', 'createSlider');
-    Route::get('/editSlider', 'editSlider');
-    Route::put('/updateSlider/{id}', 'updateSlider')->where('id', '[0-9]+');
-    Route::delete('/deleteSlider/{id}', 'deleteSlider')->where('id', '[0-9]+');
+    Route::get('/editSlider/{id}', 'editSlider');
+    Route::post('/updateSlider/{id}', 'updateSlider');
+    Route::delete('/deleteSlider/{id}', 'deleteSlider');
+    Route::post('/is_active_slider/{id}', 'isActive');
 });
 
 Route::get('/Blogs', [BlogController::class, 'FilterBlogs']);
