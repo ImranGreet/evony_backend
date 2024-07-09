@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('homeimage_title');
             $table->string('homeimage_thumbnail');
             $table->string('homeimage_desc');
+            $table->tinyInteger('is_active')->default(0);
             $table->timestamps();
         });
     }

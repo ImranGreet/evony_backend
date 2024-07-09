@@ -109,6 +109,12 @@ class BlogController extends Controller
     public function isActive($id){
         $blog = Blog::find($id);
 
+        if(Blog::where('is_active', 1)->count() >= 6){
+            return response()->json([
+                "message" => "You can't activate more than 6 blogs!",
+            ]);
+        }
+
         if($blog){
             if($blog->is_active == 1){
                 $blog->is_active = 0;
@@ -126,7 +132,21 @@ class BlogController extends Controller
                 "message" => "Blog Not Found!",
             ]);
         }
+    }
 
+    public function index(){
+        $blog = Blog::all();
 
+        return response()->json([
+            "blog" => $blog
+        ]);
+    }
+
+    public function FilterBlogs(){
+        $blog = Blog::where('is_active', 1)->get();
+
+        return response()->json([
+            "blog" => $blog
+        ]);
     }
 }

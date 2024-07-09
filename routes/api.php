@@ -16,13 +16,14 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::middleware(['auth:sanctum'])->controller(HomeImageController::class)->prefix('admin')->group(function () {
-    Route::get('/home_images_store', 'homeImageStore');
-    Route::post('/create_homeimage', 'createHomeImage');
-    Route::get('/editHomeImage', 'editHomeImage');
-    Route::put('/updateHomeImage', 'updateHomeImage');
-    Route::delete('/deleteHomeImage', 'deleteHomeImage');
+Route::get('/HomeImages', [HomeImageController::class, 'FilterHomeImages']);
+Route::prefix('admin')->controller(HomeImageController::class)->group(function () {
+    Route::get('/getHomeImages', 'index');
+    Route::post('/createHomeImage', 'createHomeImage');
+    Route::get('/editHomeImage/{id}', 'editHomeImage');
+    Route::post('/updateHomeImage/{id}', 'updateHomeImage');
+    Route::post('/deleteHomeImage/{id}', 'deleteHomeImage');
+    Route::post('/is_active_home_image/{id}', 'isActive');
 });
 
 
@@ -34,12 +35,14 @@ Route::prefix('admin')->controller(SliderController::class)->group(function () {
     Route::delete('/deleteSlider/{id}', 'deleteSlider')->where('id', '[0-9]+');
 });
 
+Route::get('/Blogs', [BlogController::class, 'FilterBlogs']);
 Route::prefix('admin')->controller(BlogController::class)->group(function () {
+    Route::get('/getBlogs', 'index');
     Route::post('/create_Blog', 'createBlog');
     Route::get('/editBlog/{id}', 'editBlog');
     Route::post('/updateBlog/{id}', 'updateBlog');
     Route::post('/deleteBlog/{id}', 'deleteBlog');
-    Route::post('/is_active/{id}', 'isActive');
+    Route::post('/is_active_blog/{id}', 'isActive');
 });
 
 
