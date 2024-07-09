@@ -36,11 +36,10 @@ Route::prefix('admin')->controller(SliderController::class)->group(function () {
 
 Route::prefix('admin')->controller(BlogController::class)->group(function () {
     Route::post('/create_Blog', 'createBlog');
-    Route::get('/editBlog', 'editBlog');
-    Route::put('/updateBlog/{id}', 'updateBlog')->where('id', '[0-9]+');
-    Route::delete('/deleteBlog/{id}', 'deleteBlog')->where('id', '[0-9]+');
-    Route::get('/getblog/{id}', 'getBlogById')->where('id', '[0-9]+');
-    Route::get('/get_blogs', 'getBlogs');
+    Route::get('/editBlog/{id}', 'editBlog');
+    Route::post('/updateBlog/{id}', 'updateBlog');
+    Route::post('/deleteBlog/{id}', 'deleteBlog');
+    Route::post('/is_active/{id}', 'isActive');
 });
 
 

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('blog_title');
             $table->string('blog_thumbnail');
             $table->string('blog_desc');
+            $table->tinyInteger('is_active')->default(0);
             $table->timestamps();
         });
     }
